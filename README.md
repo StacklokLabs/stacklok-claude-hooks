@@ -1,6 +1,6 @@
 # Claude Code Hooks: ToolHive MCP Governance
 
-A [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code) that restricts MCP (Model Context Protocol) tool calls to only servers managed by [ToolHive](https://github.com/stacklok/toolhive).
+A [Claude Code plugin](https://code.claude.com/docs/en/plugins) that restricts MCP (Model Context Protocol) tool calls to only servers managed by [ToolHive](https://github.com/stacklok/toolhive).
 
 ## Why ToolHive
 
@@ -32,7 +32,7 @@ This marketplace provides two plugin variants:
 
 ### Which plugin should I use?
 
-- **stacklok-hook** (Default): Use this if you trust all servers your team adds to ToolHive. Any server in `thv list` is allowed.
+- **stacklok-hook**: Use this if you trust all servers your team adds to ToolHive. Any server in `thv list` is allowed.
 
 - **stacklok-hook-registry-restricted**: Use this for stricter enterprise environments. Servers must be in ToolHive AND match the ToolHive registry:
   - Container workloads: The server's package must match an image in the registry
@@ -95,11 +95,11 @@ This marketplace provides two plugin variants:
    ```bash
    claude --plugin-dir /path/to/stacklok-claude-hooks/plugins/stacklok-hook
    ```
+   Or for registry-restricted mode:
 
-  Or for registry-restricted mode:
-  ```bash
-  claude --plugin-dir /path/to/stacklok-claude-hooks/plugins/stacklok-hook-registry-restricted
-  ```
+   ```bash
+   claude --plugin-dir /path/to/stacklok-claude-hooks/plugins/stacklok-hook-registry-restricted
+   ```
 
 3. Restart Claude Code.
 
@@ -137,6 +137,8 @@ The hook (`scripts/stacklok-hook.sh`):
 6. Returns structured JSON:
    - Allow: `{"hookSpecificOutput": {"permissionDecision": "allow", ...}}`
    - Deny: `{"hookSpecificOutput": {"permissionDecision": "deny", ...}, "systemMessage": "..."}`
+
+Note that shared functions are in `scripts/stacklok-hook-common.sh` and sourced by both plugins via symlinks.
 
 ## Configuration
 
