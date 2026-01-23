@@ -55,8 +55,20 @@ This marketplace provides two plugin variants:
 
 2. Add the marketplace:
    ```
-   /plugin marketplace add https://github.com/StacklokLabs/claude-hooks
+   /plugin marketplace add StacklokLabs/stacklok-claude-hooks
    ```
+
+   If you see an error about marketplace not being found or authentication failed try
+
+   ```
+   /plugin marketplace add git@github.com:StacklokLabs/stacklok-claude-hooks.git
+   ```
+
+   or
+
+   ```
+   /plugin marketplace add https://github.com/StacklokLabs/stacklok-claude-hooks
+    ```
 
 3. Install your preferred plugin:
    ```
@@ -75,21 +87,19 @@ This marketplace provides two plugin variants:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/StacklokLabs/claude-hooks.git
-   cd claude-hooks
+   git clone https://github.com/StacklokLabs/stacklok-claude-hooks.git
+   cd stacklok-claude-hooks
    ```
 
-2. Copy the plugin to your Claude Code plugins directory:
+2. Start Claude Code with the plugin directory (use absolute path):
    ```bash
-   mkdir -p ~/.claude/plugins
-   # For default mode:
-   cp -r plugins/stacklok-hook ~/.claude/plugins/
-   chmod +x ~/.claude/plugins/stacklok-hook/scripts/stacklok-hook.sh
-
-   # OR for registry-restricted mode:
-   cp -r plugins/stacklok-hook-registry-restricted ~/.claude/plugins/
-   chmod +x ~/.claude/plugins/stacklok-hook-registry-restricted/scripts/stacklok-hook.sh
+   claude --plugin-dir /path/to/stacklok-claude-hooks/plugins/stacklok-hook
    ```
+
+  Or for registry-restricted mode:
+  ```bash
+  claude --plugin-dir /path/to/stacklok-claude-hooks/plugins/stacklok-hook-registry-restricted
+  ```
 
 3. Restart Claude Code.
 
@@ -101,13 +111,6 @@ This marketplace provides two plugin variants:
 Or for registry-restricted:
 ```
 /plugin uninstall stacklok-hook-registry-restricted
-```
-
-Or manually remove:
-```bash
-rm -rf ~/.claude/plugins/stacklok-hook
-# or
-rm -rf ~/.claude/plugins/stacklok-hook-registry-restricted
 ```
 
 ## Testing
@@ -134,57 +137,6 @@ The hook (`scripts/stacklok-hook.sh`):
 6. Returns structured JSON:
    - Allow: `{"hookSpecificOutput": {"permissionDecision": "allow", ...}}`
    - Deny: `{"hookSpecificOutput": {"permissionDecision": "deny", ...}, "systemMessage": "..."}`
-
-### Example Input
-
-```json
-{
-  "session_id": "abc123",
-  "hook_event_name": "PreToolUse",
-  "tool_name": "mcp__chrome-devtools-mcp__take_screenshot",
-  "tool_input": {}
-}
-```
-
-### Example Output (Allow)
-
-```json
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "allow",
-    "permissionDecisionReason": "MCP server 'chrome-devtools-mcp' is managed by ToolHive"
-  }
-}
-```
-
-### Example Output (Deny - Not in ToolHive)
-
-```json
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "MCP call to 'mcp__evil-server__tool' blocked: server 'evil-server' is not managed by Stacklok's ToolHive."
-  },
-  "systemMessage": "MCP call to 'mcp__evil-server__tool' blocked: server 'evil-server' is not managed by Stacklok's ToolHive."
-}
-```
-
-### Example Output (Deny - Not in Registry)
-
-When using `stacklok-hook-registry-restricted` and the server is in ToolHive but not in the registry:
-
-```json
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "MCP call to 'mcp__local-server__tool' blocked: server 'local-server' is not from the configured ToolHive registry. Contact your administrator to add 'local-server' to the registry."
-  },
-  "systemMessage": "MCP call to 'mcp__local-server__tool' blocked: server 'local-server' is not from the configured ToolHive registry. Contact your administrator to add 'local-server' to the registry."
-}
-```
 
 ## Configuration
 
