@@ -1,0 +1,19 @@
+{
+    "name": "claude-hooks",
+    "owner": {
+        "name": "Stacklok",
+        "email": "support@stacklok.com"
+    },
+    "plugins": [
+        {
+            "name": "stacklok-hook",
+            "source": "./plugins/stacklok-hook",
+            "description": "MCP governance hook that restricts MCP calls to ToolHive-managed servers."
+        },
+        {
+            "name": "stacklok-hook-registry-restricted",
+            "source": "./plugins/stacklok-hook-registry-restricted",
+            "description": "MCP governance hook that restricts MCP calls to servers in the ToolHive registry."
+        }
+    ]
+}

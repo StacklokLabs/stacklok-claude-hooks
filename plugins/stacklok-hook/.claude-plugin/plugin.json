@@ -1,0 +1,9 @@
+{
+    "name": "stacklok-hook",
+    "description": "A hook that ensures MCP tool calls are only allowed for servers managed by ToolHive, regardless of whether the server is from the registry.",
+    "version": "0.1.0",
+    "author": {
+        "name": "Stacklok",
+        "email": "support@stacklok.com"
+    }
+}
