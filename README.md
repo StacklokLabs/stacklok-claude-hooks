@@ -38,10 +38,17 @@ This marketplace provides two plugin variants:
   - Container workloads: The server's package must match an image in the registry
   - Remote workloads: The server's remote URL must match a URL in the registry
 
+## Supported Platforms
+
+- **Linux** - Fully supported
+- **macOS** - Supported (requires GNU coreutils)
+- **Windows** - Not currently supported (requires bash shell)
+
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed
 - [jq](https://jqlang.github.io/jq/) - JSON processor (`brew install jq` on macOS)
+- [GNU coreutils](https://www.gnu.org/software/coreutils/) - Required for `timeout` command (`brew install coreutils` on macOS). Linux systems typically have this pre-installed.
 - [ToolHive](https://github.com/stacklok/toolhive) (`thv` CLI)
 
 ## Installation
